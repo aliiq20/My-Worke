@@ -1,141 +1,350 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>المصور علي الشمري</title>
-  <meta name="description" content="الصفحة الشخصية للمصور علي الشمري" />
-  <style>
-    :root{
-      /* ألوان مطابقة */
-      --bg:#000;              /* خلفية سوداء */
-      --accent:#ffd400;       /* أصفر زاهي للأزرار والهالة */
-      --accent-hover:#ffb000; /* أصفر برتقالي عند التحويم */
-      --text:#fff;            /* نص أبيض */
-      --sub:#9ed0ff;          /* أزرق سماوي مشابه للنص الأزرق بالصورة المرجعية */
-    }*{box-sizing:border-box}
-html,body{height:100%}
-body{
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>المصور علي الشمري</title>
+<meta name="description" content="الصفحة الشخصية للمصور علي الشمري" />
+<style>
+:root {
+  --bg:#000;
+  --accent:#ffa500; /* افتراضي برتقالي */
+  --accent-hover:#ff8c00;
+  --text:#fff;
+}
+
+/* أنيميشن تدرج متموج */
+@keyframes rgbWave {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+* {
+  box-sizing:border-box;
   margin:0;
+  padding:0;
+}
+html, body {
+  height:100%;
+  font-family:system-ui,Segoe UI,Roboto,"Noto Naskh Arabic UI",Tahoma,Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic UI", Tahoma, Arial, sans-serif;
-  overflow:hidden; /* حتى يظل الثلج داخل الشاشة */
+  overflow-x:hidden;
 }
-
-/* طبقة النجوم/الثلج (Canvas) أسفل المحتوى */
-#snow{position:fixed;inset:0;z-index:0;}
-
-/* حبيبات نجوم ثابتة خفيفة لمحاكاة الخلفية المرجعية */
-.stars{position:fixed;inset:0;z-index:0; background-image:
-  radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.7) 50%, transparent 51%),
-  radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.5) 50%, transparent 51%),
-  radial-gradient(1px 1px at 40% 60%, rgba(255,255,255,.6) 50%, transparent 51%),
-  radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,.6) 50%, transparent 51%),
-  radial-gradient(1px 1px at 10% 75%, rgba(255,255,255,.4) 50%, transparent 51%);
-  opacity:.7;
+#snow, .stars {
+  position:fixed;
+  inset:0;
   pointer-events:none;
+  z-index:0;
 }
-
-.wrap{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; min-height:100%; padding:64px 16px 32px; gap:20px}
-
-/* صورة بورتريه داخل دائرة مع هالة صفراء مثل المرجع */
-.avatar{
-  width:min(58vw, 260px);
+.stars {
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 40% 60%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 10% 75%, rgba(255,255,255,.4) 50%, transparent 51%);
+  opacity:.7;
+}
+.wrap {
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100%;
+  padding:23px 11px;
+  gap:11px;
+  transform-origin: top center;
+  transition: transform 0.3s ease;
+}
+.avatar {
+  width:40%;
+  max-width:172px;
   aspect-ratio:1/1;
   border-radius:50%;
   object-fit:cover;
-  border:4px solid #fff;
-  box-shadow:0 0 35px var(--accent), 0 0 6px rgba(255,255,255,.9) inset;
-  filter:saturate(1.05);
-  background:#222;
+  border:2px solid var(--accent);
+  box-shadow:0 0 25px var(--accent),0 0 4px rgba(255,255,255,.9) inset;
+  transition:all .3s ease;
 }
-
-h1{margin:4px 0 0; font-size:clamp(22px, 4.5vw, 34px); font-weight:800; letter-spacing:.3px; text-shadow:0 0 6px rgba(255,255,255,.15)}
-.sub{color:var(--sub); font-size:clamp(18px,3.8vw,30px); font-weight:800; margin:8px 0 6px}
-
-.btn{
-  display:block; width:min(90vw, 720px); max-width:720px; background:var(--accent); color:#000; text-decoration:none; font-weight:800;
-  padding:18px 26px; margin:10px auto; border-radius:999px; box-shadow:0 0 32px var(--accent);
-  transition:transform .12s ease, box-shadow .2s ease, background .15s ease; font-size:clamp(16px, 3.8vw, 28px);
+h1 {
+  margin:4px 0 0;
+  font-size:clamp(18px,3.45vw,25px);
+  font-weight:800;
+  letter-spacing:.3px;
+  text-shadow:0 0 6px rgba(255,255,255,.15);
+  text-align:center;
 }
-.btn:hover{background:var(--accent-hover); box-shadow:0 0 38px var(--accent-hover); transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
-
-.credit{opacity:.8; font-size:14px; margin-top:8px}
-.sep{height:10px}
-
-/* مساحة أسفل للهوامش على الموبايل */
-.spacer{height:40px}
-
-/* زر الوضع الليلي/النهاري اختياري — معطَّل افتراضياً (يمكن حذفه) */
-
-  </style>
+.btn {
+  display:block;
+  width:93%;
+  max-width:460px;
+  background:var(--accent);
+  color:#000;
+  text-decoration:none;
+  font-weight:700;
+  padding:11px 17px;
+  margin:5px 0;
+  border-radius:50px;
+  text-align:center;
+  font-size:clamp(13px,2.875vw,20px);
+  transition:all .2s;
+  box-shadow:0 0 12px var(--accent),0 0 3px rgba(255,255,255,.7) inset;
+}
+.btn:hover {
+  background:var(--accent-hover);
+  box-shadow:0 0 18px var(--accent-hover);
+  transform:translateY(-1px);
+}
+.btn:active {
+  transform:translateY(0);
+}
+.credit {
+  opacity:.8;
+  font-size:12px;
+  margin-top:6px;
+}
+.spacer {
+  height:23px;
+}
+/* زر الإعدادات */
+#settingsBtn {
+position:absolute;
+top:15px;
+left:15px;
+background:#444;
+color:#fff;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+z-index:10;
+transition:background 0.2s;
+}
+#settingsBtn.active {
+background:#666;
+}
+/* قائمة الإعدادات */
+#settingsMenu {
+position:absolute;
+top:50px;
+left:15px;
+background:#222;
+padding:10px;
+border-radius:8px;
+display:none;
+z-index:10;
+width:180px;
+opacity:0;
+transform:translateY(-10px);
+transition:opacity 0.25s ease, transform 0.25s ease;
+}
+#settingsMenu.show {
+display:block;
+opacity:1;
+transform:translateY(0);
+}
+#settingsMenu label {
+display:block;
+margin-bottom:8px;
+color:#fff;
+font-size:14px;
+}
+#settingsMenu input {
+width:100%;
+}
+.color-option {
+display:inline-block;
+width:22px;
+height:22px;
+border-radius:50%;
+margin:2px;
+cursor:pointer;
+border:1px solid #fff;
+}
+.range-container {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+#scaleValue {
+  min-width: 40px;
+  text-align:center;
+  font-size:13px;
+  color:#fff;
+  background:#333;
+  border-radius:4px;
+  padding:2px 4px;
+}
+</style>
 </head>
 <body>
-  <!-- خلفية نجوم ثابتة خفيفة -->
-  <div class="stars" aria-hidden="true"></div>
-  <!-- ثلج/نجوم متساقطة (Canvas) -->
-  <canvas id="snow" aria-hidden="true"></canvas>  <main class="wrap">
-    <!-- غيّر src إلى اسم صورتك داخل نفس المجلد (مثلاً photo.jpg) -->
-    <img class="avatar" src="https://github.com/aliiq20/My-Worke/raw/refs/heads/main/_KHD0173.JPG" alt="صورة شخصية" /><!-- نص رئيسي -->
-<h1>المصور علي الشمري</h1>
-<!-- سطر فرعي اختياري بلون أزرق سماوي مثل المرجع، احذفه إذا ما تحتاجه -->
-<!-- <div class="sub">Iraqi photographer • Baghdad</div> -->
+<div class="stars" aria-hidden="true"></div>
+<canvas id="snow" aria-hidden="true"></canvas>
 
-<!-- الأزرار (عدّل الروابط) -->
-<a class="btn" href="https://t.me/AliPhoto25" target="_blank" rel="noopener">جميع أعمالي</a>
-<a class="btn" href="https://www.instagram.com/1cc_c?igsh=MWR6dnU1YWxudmp4Zg==" target="_blank" rel="noopener">حساب التصوير</a>
-<a class="btn" href="https://www.facebook.com/share/1FHHbLJT6i/" target="_blank" rel="noopener">حسابي على الفيس</a>
-<a class="btn" href="https://www.facebook.com/share/16p6V6pzLw/" target="_blank" rel="noopener">صفحتي على الفيس</a>
-<a class="btn" href="https://github.com/aliiq20/My-Worke/raw/refs/heads/main/%D8%B9%D9%84%D9%8A%20%D8%A3%D9%85%D9%8A%D8%B1%D9%8A%20%D9%88%D9%86%D8%B9%D9%85%20%D8%A7%D9%84%D8%A3%D9%85%D9%8A%D8%B1%20_%20%D8%A3%D8%AC%D9%85%D9%84%20%D8%A3%D9%86%D8%B4%D9%88%D8%AF%D8%A9(MP3_160K).mp3" target="_blank" rel="noopener">رسائل اشتياق – مصطفى السوداني</a>
+<!-- زر الإعدادات -->
+<button id="settingsBtn">⚙️</button>
 
-<div class="credit">© المصور علي الشمري</div>
-<div class="spacer"></div>
+<!-- قائمة الإعدادات -->
+<div id="settingsMenu">
+  <label>اختر اللون:</label>
+  <div>
+    <span class="color-option" data-color="#ffa500" style="background:#ffa500;" title="برتقالي"></span>
+    <span class="color-option" data-color="#800080" style="background:#800080;" title="بنفسجي"></span>
+    <span class="color-option" data-color="#8B4513" style="background:#8B4513;" title="جوزي"></span>
+    <span class="color-option" data-color="#C2B280" style="background:#C2B280;" title="صحراوي"></span>
+    <span class="color-option" data-color="#808080" style="background:#808080;" title="رمادي"></span>
+    <span class="color-option" data-color="rgb" style="background:linear-gradient(90deg, red, orange, yellow, green, blue, purple);" title="RGB"></span>
+    <input type="color" id="colorPicker" value="#ffa500">
+  </div>
+  <label>حجم الصفحة:</label>
+  <div class="range-container">
+    <input type="range" id="scaleInput" min="50" max="600" value="100">
+    <div id="scaleValue">100%</div>
+  </div>
+</div>
 
-  </main>  <script>
-    // ثلج/نجوم متساقطة ناعمة جداً مثل المؤثر بالخلفية
-    (function(){
-      const c = document.getElementById('snow');
-      const ctx = c.getContext('2d');
-      let W, H, flakes=[];
+<main class="wrap">
+  <img class="avatar" src="myphoto.JPG" alt="صورة شخصية" />
+  <h1>المصور علي الشمري 📸</h1>
+  <a class="btn" href="https://t.me/AliPhoto25" target="_blank" rel="noopener">All my works 🎯 📂</a>
+  <a class="btn" href="https://www.instagram.com/1cc_c?igsh=MWR6dnU1YWxudmp4Zg==" target="_blank" rel="noopener">Photography account 📸</a>
+  <a class="btn" href="https://www.tiktok.com/@sh.di" target="_blank" rel="noopener">حسابي التيك توك 🎵</a>
+  <a class="btn" href="https://www.youtube.com/@shmri25" target="_blank" rel="noopener">قناة اليوتيوب ▶️</a>
+  <a class="btn" href="https://www.facebook.com/share/1FHHbLJT6i/" target="_blank" rel="noopener">حساب الفيس بوك📘</a>
+  <a class="btn" href="https://www.facebook.com/share/16p6V6pzLw/" target="_blank" rel="noopener">صفحة الفيس بوك 🌐</a>
 
-      function resize(){
-        W = c.width = window.innerWidth;
-        H = c.height = window.innerHeight;
-        // عدد الحبيبات بحسب حجم الشاشة
-        const count = Math.floor((W*H)/12000); // كثافة خفيفة لراحة الأداء
-        flakes = Array.from({length:count},()=>spawn());
-      }
+  <button class="btn" onclick="togglePlay()">علي اميري</button>
+  <audio id="player" src="علي أميري ونعم الأمير _ أجمل أنشودة(MP3_160K).mp3"></audio>
 
-      function spawn(){
-        return {
-          x: Math.random()*W,
-          y: Math.random()*H,
-          r: Math.random()*1.8 + 0.6,      // نصف القطر
-          s: Math.random()*0.6 + 0.25,     // السرعة الرأسية
-          drift: Math.random()*0.6 + 0.2,  // انجراف أفقي
-          a: Math.random()*Math.PI*2       // طور التمايل
-        };
-      }
+  <div class="credit">© جميع الحقوق محفوظة لدى المصور علي الشمري</div>
+  <div class="spacer"></div>
+</main>
 
-      function step(){
-        ctx.clearRect(0,0,W,H);
-        ctx.fillStyle = 'rgba(255,255,255,0.9)';
-        for(let f of flakes){
-          f.y += f.s;
-          f.x += Math.cos(f.a+=0.01)*f.drift*0.6; // تمايل خفيف
-          if(f.y>H+5){ f.y = -5; f.x = Math.random()*W; }
-          if(f.x<-5){ f.x = W+5; } else if(f.x>W+5){ f.x = -5; }
-          ctx.beginPath();
-          ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-          ctx.fill();
-        }
-        requestAnimationFrame(step);
-      }
+<script>
+const player = document.getElementById('player');
+function togglePlay() {
+  if(player.paused) { player.play(); } else { player.pause(); }
+}
 
-      window.addEventListener('resize', resize);
-      resize();
-      step();
-    })();
-  </script></body>
+// ثلج متحرك
+(function() {
+  const c = document.getElementById('snow');
+  const ctx = c.getContext('2d');
+  let W, H, flakes = [];
+  function resize() {
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+    const count = Math.floor((W*H)/15000);
+    flakes = Array.from({length:count},()=>spawn());
+  }
+  function spawn() {
+    return {
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*1.6 + 0.5,
+      s: Math.random()*0.5 + 0.2,
+      drift: Math.random()*0.5 + 0.15,
+      a: Math.random()*Math.PI*2
+    };
+  }
+  function step() {
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    for(let f of flakes){
+      f.y += f.s;
+      f.x += Math.cos(f.a += 0.01)*f.drift*0.6;
+      if(f.y > H+5) { f.y = -5; f.x = Math.random()*W; }
+      if(f.x < -5) { f.x = W+5; } else if(f.x > W+5) { f.x = -5; }
+      ctx.beginPath();
+      ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(step);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  step();
+})();
+
+// إعدادات
+const wrap = document.querySelector(".wrap");
+const avatar = document.querySelector(".avatar");
+const buttons = document.querySelectorAll(".btn");
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsMenu = document.getElementById("settingsMenu");
+const colorPicker = document.getElementById("colorPicker");
+const scaleInput = document.getElementById("scaleInput");
+const scaleValue = document.getElementById("scaleValue");
+const colorOptions = document.querySelectorAll(".color-option");
+
+// فتح/إغلاق القائمة
+settingsBtn.addEventListener("click", () => {
+  if(settingsMenu.classList.contains("show")){
+    closeSettings();
+  } else {
+    settingsMenu.style.display = "block";
+    setTimeout(() => settingsMenu.classList.add("show"), 10);
+    settingsBtn.classList.add("active");
+  }
+});
+
+// إغلاق القائمة بالضغط خارجها
+document.addEventListener("click", (e) => {
+  if(!settingsMenu.contains(e.target) && e.target !== settingsBtn){
+    closeSettings();
+  }
+});
+
+// تغيير الحجم بالسلايدر
+scaleInput.addEventListener("input", () => {
+  let scaleVal = scaleInput.value;
+  scaleValue.textContent = scaleVal + "%";
+  wrap.style.transform = `scale(${scaleVal/100})`;
+  document.body.style.overflowY = (scaleVal > 100) ? "auto" : "hidden";
+});
+
+// اختيار اللون
+function setColor(color) {
+  if (color === "rgb") {
+    avatar.style.animation = "rgbWave 5s infinite linear";
+    buttons.forEach(btn => btn.style.animation = "rgbWave 5s infinite linear");
+  } else {
+    avatar.style.animation = "none";
+    buttons.forEach(btn => btn.style.animation = "none");
+    document.documentElement.style.setProperty("--accent", color);
+    document.documentElement.style.setProperty("--accent-hover", color);
+    avatar.style.borderColor = color;
+    avatar.style.boxShadow = `0 0 25px ${color}, 0 0 4px rgba(255,255,255,.9) inset`;
+    buttons.forEach(btn => {
+      btn.style.background = color;
+      btn.style.boxShadow = `0 0 12px ${color}, 0 0 3px rgba(255,255,255,.7) inset`;
+    });
+  }
+}
+
+// الألوان الجاهزة
+colorOptions.forEach(opt => {
+  opt.addEventListener("click", () => {
+    setColor(opt.dataset.color);
+    closeSettings();
+  });
+});
+
+// اللون من الكول بيكر
+colorPicker.addEventListener("input", () => {
+  setColor(colorPicker.value);
+  closeSettings();
+});
+
+// دالة غلق القائمة
+function closeSettings(){
+  settingsMenu.classList.remove("show");
+  settingsBtn.classList.remove("active");
+  setTimeout(() => settingsMenu.style.display = "none", 250);
+}
+</script>
+</body>
 </html>
